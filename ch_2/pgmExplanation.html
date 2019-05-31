@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Program Explanation</title>
+</head>
+<body>
+<h2>Functional programming in Javascript example</h2>
+<p>
+    The following block of code demonstrates functional programming in JavaScript. The variable <var>books</var> is
+    initialized with an array of JavaScript objects, each containing key-value pairs. In the imperative example, we see
+    books iterated through the array and adding a new field to each object, which is analogous to the way the computer
+    actually executes the code. In the declarative example, <var>books</var> is mapped to a to a function which returns
+
+</p>
+<pre><code>
+    var books = [
+      {name:'JavaScript', pages:450},
+      {name:'Angular', pages:902},
+      {name:'Node', pages:732}
+    ];
+    /* Imperative Pattern */
+    for (var i = 0; i < books.length; i++) {
+      books[i].lastRead =  new Date();
+    }
+    /* Declarative Pattern */
+    books.map((book)=> {
+      book.lastReadBy = 'me';
+      return book;
+    });
+    console.log(books);
+</code></pre>
+</body>
+</html>
