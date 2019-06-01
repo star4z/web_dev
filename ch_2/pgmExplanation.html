@@ -2,33 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
     <title>Program Explanation</title>
 </head>
 <body>
-<h2>Functional programming in Javascript example</h2>
+<h2>Code Example</h2>
 <p>
-    The following block of code demonstrates functional programming in JavaScript. The variable <var>books</var> is
-    initialized with an array of JavaScript objects, each containing key-value pairs. In the imperative example, we see
-    books iterated through the array and adding a new field to each object, which is analogous to the way the computer
-    actually executes the code. In the declarative example, <var>books</var> is mapped to a to a function which returns
-
+    In the given example, the user is prompted for their name, which is stored in the <var>name</var> variable.
+    The code then outputs a greeting to the user.<br>For example, if the user entered <kbd>Michael Mayhew</kbd>, then the
+    program would respond with <samp>It&apos;s nice to meet you, Michael Mayhew!</samp>
 </p>
 <pre><code>
-    var books = [
-      {name:'JavaScript', pages:450},
-      {name:'Angular', pages:902},
-      {name:'Node', pages:732}
-    ];
-    /* Imperative Pattern */
-    for (var i = 0; i < books.length; i++) {
-      books[i].lastRead =  new Date();
-    }
-    /* Declarative Pattern */
-    books.map((book)=> {
-      book.lastReadBy = 'me';
-      return book;
-    });
-    console.log(books);
+    var name
+    name = prompt("Hello! What's your name?")
+    alert("It's nice to meet you, " + name + "!")
 </code></pre>
+<p>
+    As seen in <cite>The Big Fat Book of Coding Stuff</cite> by <em>Retupmoc Tnatropmi</em>,
+</p>
+<blockquote>
+    In JavaScript, variables are declared using the <code><b>var</b></code> keyword. <br>...<br>In order to obtain input from the user, the
+    <code><b>prompt()</b></code> function is used. It takes in a string parameter which is displayed, and causes the program to wait
+    until it receives input from the user. The function returns the value from the user input as a string.
+</blockquote>
+<p>
+    <small>Retupmoc is a leading member of the <abbr title="Group Of Peoplle Who Think They're Good Enough To Write Standards
+    For The Web">GOPWTTGETWSFTW</abbr>.</small>
+</p>
 </body>
 </html>
