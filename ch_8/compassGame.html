@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
+    <title>Compass Game</title>
+    <link rel="icon" href="../images/519791-101_Warning-512.png">
+    <style>
+        .table {
+            display: table;
+        }
+
+        .table > div {
+            display: table-row;
+        }
+
+        .table > div > * {
+            display: table-cell;
+            padding: 1em;
+        }
+
+        div > h1 {
+            color: red;
+        }
+
+        div > button {
+            margin: 2em;
+        }
+
+        img {
+            width: 15px;
+            height: 15px;
+        }
+
+        .diagonal {
+            transform: rotate(-45deg)
+        }
+    </style>
+    <script>
+        function swap(a, b) {
+            var temp = a;
+            a.innerHTML = b;
+            b.innerHTML = temp;
+        }
+
+        function topSwap() {
+            var a = document.getElementById("up-dir");
+            var b = document.getElementById("left-dir");
+            swap(a, b);
+        }
+
+        function middleSwap() {
+            var a = document.getElementById("right-dir");
+            var b = document.getElementById("left-dir");
+            swap(a, b);
+        }
+
+        function bottomSwap() {
+            var a = document.getElementById("right-dir");
+            var b = document.getElementById("down-dir");
+            swap(a, b);
+        }
+
+        function update(form) {
+            document.getElementById("up-dir").innerHTML = form.elements["top"].value;
+            document.getElementById("left-dir").innerHTML = form.elements["left"].value;
+            document.getElementById("right-dir").innerHTML = form.elements["right"].value;
+            document.getElementById("down-dir").innerHTML = form.elements["bottom"].value;
+            form.reset();
+            form.elements["top"].focus();
+        }
+    </script>
+</head>
+
+<body>
+<h1>Compass Game</h1>
+<p>
+    The direction letters on the "compass" are scrambled. Press the arrows to properly position the direction letters.
+</p>
+<div class="table">
+    <div>
+        <button class="diagonal" onclick="topSwap()"><img src="../images/bd_arrow.png" alt="swap"></button>
+        <h1 id="up-dir">E</h1>
+        <p></p>
+    </div>
+    <div>
+        <h1 id="left-dir">S</h1>
+        <button onclick="middleSwap()"><img src="../images/bd_arrow.png" alt="swap"></button>
+        <h1 id="right-dir">N</h1>
+    </div>
+    <div>
+        <p></p>
+        <h1 id="down-dir">W</h1>
+        <button class="diagonal" onclick="bottomSwap()"><img src="../images/bd_arrow.png" alt="swap"></button>
+    </div>
+</div>
+<p>To restart the game press <i>Restart,</i> enter N, S, E, and W in any order in the boxes below, and then press
+    <i>Update.</i></p>
+<form>
+    <input type="reset" value="Restart">
+    <br><br>
+    Top: <input type="text" id="top" size="2" maxlength="1">
+    Left: <input type="text" id="left" size="2" maxlength="1">
+    Right: <input type="text" id="right" size="2" maxlength="1">
+    Bottom: <input type="text" id="bottom" size="2" maxlength="1">
+    <br><br>
+    <input type="button" value="Update" onclick="update(this.form)">
+</form>
+</body>
+</html>
