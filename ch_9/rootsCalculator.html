@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
+    <title>Quadratic Equation Roots Calculator</title>
+    <style>
+        :invalid {
+            border-color: red;
+        }
+
+        :valid {
+            border-color: lightgray;
+        }
+    </style>
+    <script>
+        function calculate(form) {
+            const a_element = form.elements['a'];
+            const b_element = form.elements['b'];
+            const c_element = form.elements['c'];
+            const a = a_element.value;
+            const b = b_element.value;
+            const c = c_element.value;
+            const output = form.elements['roots'];
+
+            if (a == 0 || !form.checkValidity()) {
+                var message = "";
+                if (a == 0 || !a_element.checkValidity()) {
+                    message += "Invalid entry for a. Must be a non-zero integer between -99 and +99.\n"
+                }
+                if (!b_element.checkValidity()) {
+                    message += "Invalid entry for b. Must be an integer between -99 and +99.\n"
+                }
+                if (!c_element.checkValidity()) {
+                    message += "Invalid entry for c. Must be an integer between -99 and +99.\n"
+                }
+                alert(message);
+            } else {
+                const bSquared = b ** 2;
+                const fourAC = 4 * a * c;
+                if (bSquared < fourAC) {
+                    output.value = "Solution: x's roots are imaginary."
+                } else if (bSquared == fourAC) {
+                    const root = -b / (2 * a);
+                    output.value = "Solution: x = " + root
+                } else {
+                    const root1 = (-b + Math.sqrt(bSquared - fourAC)) / (2 * a);
+                    const root2 = (-b - Math.sqrt(bSquared - fourAC)) / (2 * a);
+                    output.value = "Solution: x = " + root1 + ", x = " + root2
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Quadratic Equation Roots Calculator</h1>
+<p>
+    This web page finds the roots of a polynomial equation of the following form:<br>
+    <i>ax<sup>2</sup> + bx + c = 0</i>
+</p>
+<p><i>a, b,</i> and <i>c</i> must be integers between -99 and +99, and <i>a</i> must be non-zero.</p>
+<form id="inputs">
+    <label for="a">a:</label><input type="number" id="a" min="-99" max="99">
+    <label for="b">b:</label><input type="number" id="b" min="-99" max="99">
+    <label for="c">c:</label><input type="number" id="c" min="-99" max="99">
+</form>
+<br><br>
+<input type="button" form="inputs" onclick="calculate(this.form)" value="Calculate roots">
+<br>
+<output id="roots" form="inputs"></output>
+</body>
+</html>
