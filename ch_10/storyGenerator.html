@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
+    <title>Story Generator</title>
+    <style>
+        .tahoma {
+            font-family: "Tahoma", sans-serif;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        label {
+            display: table-cell;
+            text-align: right;
+        }
+
+        input {
+            display: table-cell;
+            margin-left: 0.5em;
+        }
+
+        input[type=button] {
+            margin-top: 2em;
+        }
+
+        #story {
+            margin-top: -5em;
+            visibility: collapse;
+            color: blue;
+            font-family: "Comic Sans MS", sans-serif;
+        }
+
+        .hole {
+            color: red;
+        }
+    </style>
+    <script src="storyGenerator.js"></script>
+</head>
+<body>
+<section id="words">
+    <h1>Story Generator</h1>
+    <p>Enter appropriate values in all of the text boxes. Then click the <span class="tahoma">Done</span> button to
+        generate a
+        story with
+        your
+        entered values plugged into it.</p>
+    <form>
+        <div class="row">
+            <label for="field_1">noun:</label><input id="field_1" type="text">
+        </div>
+        <div class="row">
+            <label for="field_2">past tense verb:</label><input id="field_2" type="text">
+        </div>
+        <div class="row">
+            <label for="field_3">adjective</label><input id="field_3" type="text">
+        </div>
+        <div class="row">
+            <label for="field_4">past tense verb:</label><input id="field_4" type="text">
+        </div>
+        <div class="row">
+            <label for="field_5">adjective:</label><input id="field_5" type="text">
+        </div>
+        <div class="row">
+            <input type="button" value="Done" onclick="submitWords(this.form)">
+            <input type="button" value="Reset" onclick="this.form.reset()">
+        </div>
+    </form>
+</section>
+<section id="story">
+It was a dark and stormy night. A shot rang out! A <span class="hole"></span> slammed. The main <span
+        class="hole"></span>.
+    Suddenly, a
+    <span class="hole"></span> ship appeared on the horizon! While millions of people <span class="hole"></span>, the
+    king lived
+    in
+    luxury.
+    Meanwhile, on a <span class="hole"></span> farm in Kansas, a boy was growing up.
+    <br><br>
+    The End
+    <br>
+    <input type="button" value="Return" onclick="back()">
+</section>
+</body>
+</html>
