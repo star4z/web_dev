@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
+    <title>Statistics Calculator</title>
+    <style>
+        div {
+            padding-bottom: 1em;
+        }
+    </style>
+
+    <script>
+
+        function mean(numbers) {
+            let total = 0;
+
+            for (let n of numbers) {
+                total += n;
+            }
+
+            return total / numbers.length;
+        }
+
+        function calcMean(form) {
+            let text = form.elements[0].value;
+            let numbers = getNumbers(text);
+
+            if (numbers != null) {
+                let m = mean(numbers);
+
+                alert("Mean: " + m);
+            }
+        }
+
+        function variance(numbers) {
+            let m = mean(numbers);
+
+            let numerator = 0;
+
+            for (let n of numbers) {
+                numerator += Math.pow(n - m, 2);
+            }
+
+            let denominator = numbers.length - 1;
+
+            return numerator / denominator;
+        }
+
+        function calcVariance(form) {
+            let text = form.elements[0].value;
+            let numbers = getNumbers(text);
+
+            if (numbers != null) {
+                let v = variance(numbers);
+
+                alert("Variance: " + v);
+            }
+        }
+
+        function calcStd(form) {
+            let text = form.elements[0].value;
+            let numbers = getNumbers(text);
+
+            if (numbers != null) {
+                let v = variance(numbers);
+
+                let std = Math.sqrt(v);
+
+                alert("Standard deviation: " + std);
+            }
+        }
+
+        function getNumbers(str) {
+            let parts = str.split(" ");
+            let numbers = Array();
+            console.log(parts);
+            for (let p of parts) {
+                console.log(p);
+
+                let number = parseFloat(p);
+                if (isNaN(number)) {
+                    alert("'" + p + "' is not a number.");
+                    return null;
+                }
+                numbers.push(number);
+            }
+
+            return numbers;
+        }
+    </script>
+</head>
+<body>
+<h1>Statistics Calculator</h1>
+<h2>Enter a list of numbers separated by spaces.</h2>
+<form id="numbers">
+    <div>
+    <label for="text-control">Number list: </label><input id="text-control" type="text">
+    </div>
+    <div>
+        <input type="button" value="Mean" onclick="calcMean(this.form)">
+        <input type="button" value="Variance" onclick="calcVariance(this.form)">
+        <input type="button" value="Standard Deviation" onclick="calcStd(this.form)">
+    </div>
+</form>
+</body>
+</html>
