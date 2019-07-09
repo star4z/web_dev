@@ -1,126 +1,109 @@
-let canvas;
-let context;
-let radius;
-let xOffset;
-let yOffset;
+// x and y coordinates for the face's center point.
+const CENTER_X = 250;       // center of dial x position
+const CENTER_Y = 200;       // center of dial y position
+const CASING_RADIUS = 160;  // casing for the dial
+const DIAL_RADIUS = 120;    // dial shows hash marks & numbers
+const KNOB_RADIUS = 45;     // the turning mechanism (if real)
+const POINTER_HEIGHT = 16;  // height of triangle at top
+const NUM_OF_TICK_MARKS = 40; // tick indicate dial positions
+const TICK_WIDTH = 4;       // width of each tick mark
 
-function init() {
+let ctx;    // the canvas object's context
+
+
+//*************************************************
+
+// This function draws the combination lock.
+
+function initializeCanvas() {
+    let canvas; // the canvas element
+
     canvas = document.getElementById("canvas");
-    context = canvas.getContext("2d");
+    ctx = canvas.getContext("2d");
+    drawCasing();
+    drawDial(0);
+} // end initializeCanvas
 
-    context.fillStyle = "Black";
-    context.fillRect(0, 0, canvas.width, canvas.height);
+//*************************************************
 
-    radius = 150;
-    xOffset = 200;
-    yOffset = 200;
+// This function draws the lock's casing.
 
-    //Draw outer circle
-    context.beginPath();
-    context.arc(xOffset, yOffset, radius, 0, 2 * Math.PI);
-    context.fillStyle = "LightGrey";
-    context.fill();
-    context.strokeStyle = "DarkGrey";
-    context.lineWidth = 3;
-    context.stroke();
-    context.closePath();
+function drawCasing() {
+    ctx.fillStyle = "silver";
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
 
-    context.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(CENTER_X, CENTER_Y, CASING_RADIUS, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.stroke();
 
-    //Draw inner circles
-    context.beginPath();
-    context.arc(xOffset, yOffset, radius * 0.75, 0, 2 * Math.PI);
-    context.stroke();
-    context.closePath();
+    // Draw line that surrounds the dial
+    ctx.beginPath();
+    ctx.arc(CENTER_X, CENTER_Y, DIAL_RADIUS + 4,
+        -.48 * Math.PI, 1.48 * Math.PI);
+    ctx.stroke();
 
-    context.beginPath();
-    context.arc(xOffset, yOffset, radius * 0.7, 0, 2 * Math.PI);
-    context.stroke();
-    context.closePath();
+    // Draw dial's pointer
+    ctx.fillStyle = "red";
+    ctx.beginPath();
+    ctx.moveTo(CENTER_X, CENTER_Y - DIAL_RADIUS);
+    ctx.lineTo(CENTER_X + POINTER_HEIGHT,
+        CENTER_Y - DIAL_RADIUS - POINTER_HEIGHT);
+    ctx.lineTo(CENTER_X - POINTER_HEIGHT,
+        CENTER_Y - DIAL_RADIUS - POINTER_HEIGHT);
+    ctx.fill();
+} // end drawCasing
 
-    //Draw triangle pointer
-    context.beginPath();
-    context.fillStyle = "Tomato";
-    context.moveTo(xOffset, 200 - (radius * 0.7));
-    context.lineTo(xOffset + 15, yOffset - (radius * 0.8));
-    context.lineTo(xOffset - 15, yOffset - (radius * 0.8));
-    context.lineTo(xOffset, 200 - (radius * 0.7));
-    context.fill();
-    context.closePath();
+//*************************************************
 
-    drawLock(0);
-}
+// This function draws the lock's dial.
 
-function drawLock(angle) {
-    //Draw black background
-    context.beginPath();
-    context.fillStyle = "Black";
-    context.arc(xOffset, yOffset, radius * 0.69, 0, 2 * Math.PI);
-    context.fill();
-    context.closePath();
+function drawDial(adjustedTicks) {
+    ctx.translate(CENTER_X, CENTER_Y);
 
-    context.strokeStyle = "White";
+    // Use passed-in ticks to adjust current rotation.
+    ctx.rotate(adjustedTicks * 2 * Math.PI / NUM_OF_TICK_MARKS);
 
-    let outerTicRadius = radius * 0.65;
-    let littleTicRadius = radius * 0.6;
-    let bigTicRadius = radius * 0.55;
+    // draw dial background
+    ctx.beginPath();
+    ctx.fillStyle = "black";
+    ctx.arc(0, 0, DIAL_RADIUS, 0, 2 * Math.PI);
+    ctx.fill();
 
-    for (let i = 1; i <= 40; i++) {
-        let theta = 2 * Math.PI * (i / 40);
+    // draw knob
+    ctx.beginPath();
+    ctx.fillStyle = "darkslategray";
+    ctx.arc(0, 0, KNOB_RADIUS, 0, 2 * Math.PI);
+    ctx.fill();
 
-        let x = Math.cos(theta);
-        let y = Math.sin(theta);
+    // Draw center label
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.font = "bold 25px Times, serif";
+    ctx.fillText("Master", 0, 0);
 
-        // console.log(theta);
-        // console.log("(" + x + ", " + y + ")");
+    // Draw hash marks and numbers
+    ctx.strokeStyle = "white";
+    ctx.lineWidth = TICK_WIDTH;
+    ctx.textBaseline = "top";
+    ctx.font = "20px Arial, sans-serif";
 
-        //Draw the tics
-        context.beginPath();
+    ctx.beginPath();
+    for (let i=0; i<NUM_OF_TICK_MARKS; i++) {
         if (i % 5 === 0) {
-            context.moveTo(bigTicRadius * x + xOffset, bigTicRadius * y + yOffset);
-        } else {
-            context.moveTo(littleTicRadius * x + xOffset, littleTicRadius * y + yOffset);
+            ctx.fillText(i.toString(), 0, -DIAL_RADIUS + 22);
+            ctx.moveTo(0, -DIAL_RADIUS + 20);
         }
-        context.lineTo(outerTicRadius * x + xOffset, outerTicRadius * y + yOffset);
-        context.stroke();
-        context.closePath();
+        else {
+            ctx.moveTo(0, -DIAL_RADIUS + 14);
+        }
+        ctx.lineTo(0, -DIAL_RADIUS + 4);
+        ctx.rotate(2 * Math.PI / NUM_OF_TICK_MARKS);
+    } // end for
+    ctx.stroke();
 
-        // if (i % 5 === 0) {
-        //     context.beginPath();
-        //     context.save();
-        //     context.translate(-xOffset, -yOffset);
-        //     context.rotate(theta);
-        //     context.translate(xOffset, yOffset);
-        //     context.fillStyle = "White";
-        //     context.fillText("" + i, xOffset, 0.3 * radius - yOffset);
-        //     context.restore();
-        //     context.closePath();
-        // }
-
-        // context.translate(-xOffset, -yOffset);
-        //
-        // context.rotate(Math.PI / 20);
-        // context.translate(xOffset, yOffset);
-    }
-
-    context.beginPath();
-    context.fillStyle = "White";
-    context.textAlign = "center";
-    context.font = "2em";
-    context.fillText("0", xOffset, yOffset - (0.45 * radius));
-    context.closePath();
-
-    context.beginPath();
-    context.translate(-xOffset, -yOffset);
-    context.rotate(-Math.PI / 20);
-    context.translate(xOffset, yOffset);
-    context.fillText("5", xOffset, yOffset - (0.45 * radius));
-    context.closePath();
-
-    context.beginPath();
-    context.translate(-xOffset, -yOffset);
-    context.rotate( -2 * Math.PI / 20);
-    context.translate(xOffset, yOffset);
-    context.fillText("10", xOffset, yOffset - (0.45 * radius));
-    context.closePath();
-}
+    // Restore canvas origin so next drawDial works.
+    ctx.translate(-CENTER_X, -CENTER_Y);
+} // end drawDial

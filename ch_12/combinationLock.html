@@ -6,7 +6,10 @@
     <title>Combination Lock</title>
     <script src="combinationLock.js"></script>
 </head>
-<body onload="init();">
+<body onload="initializeCanvas();">
 <canvas id="canvas" width="500" height="500"></canvas>
+<br>
+<button onclick="drawDial(-1)">Nudge left</button>
+<button onclick="drawDial(1)">Nudge right</button>
 </body>
 </html>
