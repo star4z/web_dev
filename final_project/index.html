@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Phillips">
+    <title>Movies</title>
+    <script src="movies.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        body {
+            display: block;
+            padding-left: 25em;
+            padding-right: 25em;
+            background-color: bisque;
+        }
+
+        form {
+            padding-bottom: 6em;
+        }
+
+        h1 {
+            font-family: "Tahoma", sans-serif;
+            font-size: xx-large;
+        }
+
+        #container {
+            display: table;
+        }
+
+        .row {
+            display: table-row;
+        }
+
+        .cell {
+            display: table-cell;
+        }
+
+        p {
+            padding-left: 1em;
+            vertical-align: top;
+            font-family: "Arial", sans-serif;
+        }
+
+        img {
+            padding-bottom: 1em;
+        }
+    </style>
+</head>
+<body id="body" onload="init()">
+<h1>MOVIE SEARCH</h1>
+<form>
+    <!--suppress HtmlFormInputWithoutLabel -->
+    <input id="search-box" type="text" size="50" title="Search for a movie" oninput="search(this.form)">
+    <input type="button" onclick="search(this.form)" value="Search">
+</form>
+<div id="container"></div>
+</body>
+</html>
